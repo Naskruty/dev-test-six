@@ -7,7 +7,11 @@ use Snowdog\DevTest\Model\UserManager;
 use Snowdog\DevTest\Model\WebsiteManager;
 use Naskruty\DevTestSix\Component\Import;
 
-class SitemapPagesAction
+/**
+ * Class ImportSitemapPagesAction
+ * @package Naskruty\DevTestSix\Controller
+ */
+class ImportSitemapPagesAction
 {
     /**
      * @var UserManager
@@ -18,8 +22,17 @@ class SitemapPagesAction
      */
     private $websiteManager;
 
+    /**
+     * @var Import
+     */
     private $import;
 
+    /**
+     * ImportSitemapPagesAction constructor.
+     * @param UserManager $userManager
+     * @param WebsiteManager $websiteManager
+     * @param Import $import
+     */
     public function __construct(UserManager $userManager, WebsiteManager $websiteManager, Import $import)
     {
         $this->userManager = $userManager;
@@ -27,9 +40,18 @@ class SitemapPagesAction
         $this->import = $import;
     }
 
+    /**
+     *
+     */
     public function execute()
     {
         if (!isset($_SESSION['login'])) {
+            header('Location: /login');
+            return;
+        }
+
+        $user = $this->userManager->getByLogin($_SESSION['login']);
+        if (!$user) {
             header('Location: /login');
             return;
         }
@@ -41,9 +63,14 @@ class SitemapPagesAction
             return;
         }
 
-        $res = $this->import->importPages($url);
-
+        $res = $this->import->importPages($url, $_SESSION['login']);
+        if ($res==true){
+            $_SESSION['flash'] = 'Import finished with success!';
+            header('Location: /');
+            return;
+        }
 
         header('Location: /import');
+        return;
     }
 }
