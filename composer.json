@@ -1,0 +1,11 @@
+{
+  "name": "naskruty/dev-test-six",
+  "autoload": {
+    "psr-4": {
+      "Naskruty\\DevTestSix\\": "src"
+    },
+    "files": [
+      "src/components.php"
+    ]
+  }
+}
