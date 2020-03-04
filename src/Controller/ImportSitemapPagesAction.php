@@ -64,8 +64,11 @@ class ImportSitemapPagesAction
         }
 
         $res = $this->import->importPages($url, $_SESSION['login']);
-        if ($res==true){
+        if (isset($res['status']) and $res['status']=='OK'){
             $_SESSION['flash'] = 'Import finished with success!';
+            if (!empty($res['message'])){
+                $_SESSION['flash'] = $res['message'];
+            }
             header('Location: /');
             return;
         }

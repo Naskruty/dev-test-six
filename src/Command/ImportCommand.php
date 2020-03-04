@@ -24,26 +24,32 @@ class ImportCommand
         $this->import = $import;
     }
 
-    public function __invoke($url, $userLogin, OutputInterface $output)
+    public function __invoke($url, $user_login, OutputInterface $output)
     {
         if (empty($url)) {
             $output->writeln('<error>Sitemap URL cannot be empty!</error>');
             return;
         }
 
-        if (empty($userLogin)) {
+        if (empty($user_login)) {
             $output->writeln('<error>User login cannot be empty!</error>');
             return;
         }
-        $user = $this->userManager->getByLogin($userLogin);
+        $user = $this->userManager->getByLogin($user_login);
         if (!$user) {
-            $output->writeln('<error>User with login '. $userLogin . ' does not exist!</error>');
+            $output->writeln('<error>User with login '. $user_login . ' does not exist!</error>');
             return;
         }
 
-        $res = $this->import->importPages($url, $userLogin);
-        if ($res==true){
-            $output->writeln('Import finished with success!');
+        $res = $this->import->importPages($url, $user_login);
+        if (isset($res['status']) and $res['status']=='OK'){
+            $message = 'Import finished with success!';
+            if (!empty($res['message'])){
+                $message = $res['message'];
+            }
+            $output->writeln($message);
+        } else {
+            $output->writeln('<error>Something went wrong. Check input data and try again.</error>');
         }
 
         return;

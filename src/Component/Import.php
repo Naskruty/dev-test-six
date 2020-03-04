@@ -58,6 +58,7 @@ class Import
         if (empty($pagesArray)){
             return false;
         }
+        $result = ['message' => ''];
         try {
             $user = $this->userManager->getByLogin($userLogin);
             foreach ($pagesArray as $host => $pages) {
@@ -65,11 +66,16 @@ class Import
                 if (empty($websiteId)) {
                     continue;
                 }
+                $i = 0;
                 $website = $this->websiteManager->getById($websiteId);
                 foreach ($pages as $page) {
+                    $i++;
                     $this->pageManager->create($website, $page);
                 }
+                $result['message'] .= 'Added '.$host.' website with '.$i.' pages. ';
             }
+            $result['status'] = 'OK';
+            return $result;
         }catch(\Exception $e){
             return false;
         }

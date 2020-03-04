@@ -14,4 +14,4 @@ Menu::register(ImportPagesMenu::class, 20);
 RouteRepository::registerRoute('GET', '/import', SitemapPagesAction::class, 'execute');
 RouteRepository::registerRoute('POST', '/import', ImportSitemapPagesAction::class, 'execute');
 
-CommandRepository::registerCommand('import [url] [user]', ImportCommand::class);
+CommandRepository::registerCommand('import [url] [user_login]', ImportCommand::class);
