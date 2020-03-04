@@ -1,5 +1,9 @@
 <?php
 
+use Snowdog\DevTest\Component\CommandRepository;
+use Snowdog\DevTest\Component\Menu;
+use Snowdog\DevTest\Component\RouteRepository;
+
 use Naskruty\DevTestSix\Menu\ImportPagesMenu;
 use Naskruty\DevTestSix\Controller\SitemapPagesAction;
 use Naskruty\DevTestSix\Controller\ImportSitemapPagesAction;

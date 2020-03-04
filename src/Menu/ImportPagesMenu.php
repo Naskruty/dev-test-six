@@ -2,6 +2,8 @@
 
 namespace Naskruty\DevTestSix\Menu;
 
+use Snowdog\DevTest\Menu\AbstractMenu;
+
 class ImportPagesMenu extends AbstractMenu
 {
 
